@@ -4,7 +4,7 @@ import logging
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 
-def sendMail(url, time, host, port):
+def sendMail(url, time, host, port, machineIP):
     """Sends an email
     
     This method sends an email to the email account that is defined in the
@@ -26,12 +26,13 @@ def sendMail(url, time, host, port):
     text = """\
     Hi,
 
-    This is an automated email by Mercury informing you that Hades is down.
+    This is an automated email by Mercurius informing you that Hades is down.
     
     The following details are linked to the failed connection request:
-    Time of ping:&nbsp;&nbsp;&nbsp;&nbsp;{1}
-    Hostname:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{2}
-    Port:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{3}
+    Run by: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{1}
+    Time of ping:&nbsp;&nbsp;&nbsp;&nbsp;{2}
+    Hostname:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{3}
+    Port:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{4}
 
     For the full log and subsequent reports please check the log folder.
 
@@ -44,12 +45,13 @@ def sendMail(url, time, host, port):
     <html>
     <body>
         <p>Hi,<br><br>
-        This is an automated email by Mercury informing you that <a href="https://{0}">Hades</a> is down.<br>
+        This is an automated email by Mercurius informing you that <a href="https://{0}">Hades</a> is down.<br>
         <br>
         The following details are linked to the failed connection request: <br>
-        Time of ping:&nbsp;&nbsp;&nbsp;&nbsp;{1}<br>
-        Hostname:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{2}<br>
-        Port:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{3}<br>
+        Run by: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{1}<br>
+        Time of ping:&nbsp;&nbsp;&nbsp;&nbsp;{2}<br>
+        Hostname:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{3}<br>
+        Port:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{4}<br>
         <br>
         For the full log and subsequent reports please check the log folder.<br>
         <br>
@@ -62,8 +64,8 @@ def sendMail(url, time, host, port):
     """
 
     # Turn these into plain/html MIMEText objects
-    part1 = MIMEText(text.format(url, time, host, port), "plain")
-    part2 = MIMEText(html.format(url, time, host, port), "html")
+    part1 = MIMEText(text.format(host, machineIP, time, url, port), "plain")
+    part2 = MIMEText(html.format(host, machineIP, time, url, port, machineIP), "html")
 
     # Add HTML/plain-text parts to MIMEMultipart message
     # The email client will try to render the last part first
