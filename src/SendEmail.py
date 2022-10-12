@@ -1,5 +1,5 @@
 import smtplib, ssl
-from src import credentials
+import credentials
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 
@@ -81,4 +81,4 @@ def sendMail(url, time, host, port):
         # Print any error messages to stdout
         print(e)
     finally:
-        server.quit() 
+        server.quit()
