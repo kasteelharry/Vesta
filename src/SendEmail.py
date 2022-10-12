@@ -5,7 +5,7 @@ from email.mime.text import MIMEText
 
 def sendMail(url, time, host, port):
 
-    port = credentials.port  # For SSL
+    portSSL = credentials.port  # For SSL
     password = credentials.password
     sender_email = credentials.username
     smtp_server = credentials.smtpServer
@@ -70,7 +70,7 @@ def sendMail(url, time, host, port):
     # Try to log in to server and send email
     try:
         print("connecting to SMTP server")
-        server = smtplib.SMTP(smtp_server,port)
+        server = smtplib.SMTP(smtp_server,portSSL)
         print("securing connection")
         server.starttls(context=context) # Secure the connection
         print("logging in")
