@@ -5,7 +5,7 @@ from datetime import datetime
 import logging
 import urllib.request
 
-def pingServer(url, port, host=None):
+def pingServer(url, port, host=""):
     """Pings the server and send an email if unreachable.
     
     This method pings the url and port passed as parameters. If the
@@ -35,7 +35,7 @@ def pingServer(url, port, host=None):
         logging.info("Sending an email")
 
         # If no host was passed, set the url as the host.
-        if host == None:
+        if len(host) <= 0:
             host = url
 
         # Send email
