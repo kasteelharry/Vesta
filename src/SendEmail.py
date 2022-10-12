@@ -1,9 +1,16 @@
 import smtplib, ssl
 import credentials
+import logging
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 
 def sendMail(url, time, host, port):
+    """Sends an email
+    
+    This method sends an email to the email account that is defined in the
+    credentials.py file.
+
+    """
 
     portSSL = credentials.port  # For SSL
     password = credentials.password
@@ -69,16 +76,19 @@ def sendMail(url, time, host, port):
 
     # Try to log in to server and send email
     try:
-        print("connecting to SMTP server")
+        logging.info("connecting to SMTP server.")
         server = smtplib.SMTP(smtp_server,portSSL)
-        print("securing connection")
+        logging.info("securing connection.")
         server.starttls(context=context) # Secure the connection
-        print("logging in")
+        logging.info("logging in.")
         server.login(sender_email, password)
-        print("sending email")
+        logging.info("sending email.")
         server.sendmail(sender_email, receiver_email, message.as_string())
+        logging.info("Email has been sent.")
     except Exception as e:
         # Print any error messages to stdout
-        print(e)
+        logging.warn("Was unable to send the email, check the stacktrace below.")
+        logging.error(e)
     finally:
+        logging.info("Closing the SMTP server")
         server.quit()
