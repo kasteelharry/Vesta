@@ -1,8 +1,7 @@
 import smtplib, ssl
-import credentials
+from src import credentials
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
-from datetime import datetime
 
 def sendMail(url, time, host, port):
 
@@ -83,6 +82,3 @@ def sendMail(url, time, host, port):
         print(e)
     finally:
         server.quit() 
-        
-
-sendMail("130.89.162.202", datetime.now().time(), "130.89.162.202", 8443)
