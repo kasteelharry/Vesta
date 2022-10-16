@@ -1,6 +1,6 @@
 import socket
 import sys
-from src import SendEmail
+from src import SendEmail, StoreLog
 from datetime import datetime
 import logging
 import urllib.request
@@ -41,6 +41,7 @@ def pingServer(url, port, host=""):
         try:
             # Send email
             SendEmail.sendMail(url, time, host, port, publicIP)
+            StoreLog.storeLog(fileTime)
         except Exception as e:
             logging.error("Could not send email, check the line below")
             logging.warn(e)
