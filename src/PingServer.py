@@ -23,8 +23,9 @@ def pingServer(url, port, host=""):
         return
     else:
         # Create log file
-        time = datetime.now().strftime("%Y-%m-%d-%H-%M-%S")
-        logFile = "vesta-logs/{0}.log".format(time)
+        fileTime = datetime.now().strftime("%Y-%m-%d-%H-%M-%S")
+        time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+        logFile = "vesta-logs/{0}.log".format(fileTime)
         logging.basicConfig(filename=logFile,
                     filemode='a',
                     format='%(asctime)s %(name)s %(levelname)s %(message)s',
@@ -37,10 +38,8 @@ def pingServer(url, port, host=""):
         # If no host was passed, set the url as the host.
         if len(host) <= 0:
             host = url
-
-        # Send email
         try:
-
+            # Send email
             SendEmail.sendMail(url, time, host, port, publicIP)
         except Exception as e:
             logging.error("Could not send email, check the line below")
