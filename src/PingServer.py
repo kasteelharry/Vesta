@@ -1,9 +1,11 @@
 import socket
 import sys
-from src import SendEmail, StoreLog
-from datetime import datetime
 import logging
 import urllib.request
+from wakeonlan import send_magic_packet
+import credentials
+from datetime import datetime
+from src import SendEmail, StoreLog
 
 def pingServer(url, port, host=""):
     """Pings the server and send an email if unreachable.
@@ -46,4 +48,6 @@ def pingServer(url, port, host=""):
             logging.error("Could not send email, check the line below")
             logging.warn(e)
             print("Please check the logs")
-        # TODO Send wake on lan packet to URL to turn it on again
+        finally:
+            # Send Wake-On-LAN packet
+            send_magic_packet(credentials.MAC_ADDRESS)
