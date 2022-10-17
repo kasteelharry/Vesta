@@ -15,4 +15,7 @@ def storeLog(time):
     """
     srcDir = os.getcwd() + os.path.normpath('/Hades/HadesLog.log')
     dstDir = os.getcwd() + os.path.normpath('/vesta-logs/'+ time +'-HadesLog.log')
+    # Copy the file to the vesta-log folder
     shutil.copy(srcDir, dstDir)
+    # Set the permissions
+    os.chmod(dstDir, 0o444)
