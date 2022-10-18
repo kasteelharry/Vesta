@@ -35,14 +35,15 @@ def pingServer(url, port, host=""):
                     level=logging.DEBUG)
         logging.error("Could not reach server. Started logging file")
         logging.warn("Tried to ping {0} on port {1} from {2}".format(url, port, publicIP))
-        logging.info("Sending an email")
 
         # If no host was passed, set the url as the host.
         if len(host) <= 0:
             host = url
         try:
             # Send email
+            logging.info("Sending an email")
             SendEmail.sendMail(url, time, host, port, publicIP)
+            logging.info("Storing the rsyslog file to the log folder")
             StoreLog.storeLog(fileTime)
         except Exception as e:
             logging.error("Could not send email, check the line below")
@@ -50,4 +51,5 @@ def pingServer(url, port, host=""):
             print("Please check the logs")
         finally:
             # Send Wake-On-LAN packet
+            logging.info("Sending Wake-On-LAN packet")
             send_magic_packet(credentials.MAC_ADDRESS)
